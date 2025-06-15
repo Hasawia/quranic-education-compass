@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { BookOpen, Calendar, Award, User, Clock, CheckCircle } from 'lucide-react';
+import { BookOpen, Calendar, Award, User, Clock, CheckCircle, FileText, GraduationCap, Download } from 'lucide-react';
 
 // صفحة الطلاب - بوابة الطالب الشاملة
 const Student = () => {
@@ -23,7 +23,8 @@ const Student = () => {
         instructor: 'الشيخ أحمد محمد',
         progress: 75,
         nextClass: 'الأحد 4:00 مساءً',
-        currentSurah: 'سورة البقرة'
+        currentSurah: 'سورة البقرة',
+        grade: 'A'
       },
       {
         id: 2,
@@ -31,7 +32,8 @@ const Student = () => {
         instructor: 'الشيخ محمد حسن',
         progress: 60,
         nextClass: 'الثلاثاء 6:00 مساءً',
-        currentSurah: 'أحكام النون الساكنة'
+        currentSurah: 'أحكام النون الساكنة',
+        grade: 'B+'
       }
     ],
     recentAchievements: [
@@ -42,6 +44,19 @@ const Student = () => {
     upcomingExams: [
       { subject: 'اختبار التجويد', date: '2024-01-25', time: '5:00 مساءً' },
       { subject: 'مراجعة حفظ الجزء 30', date: '2024-01-30', time: '4:00 مساءً' }
+    ],
+    weeklySchedule: [
+      { day: 'الأحد', course: 'تحفيظ القرآن الكريم', time: '4:00 - 5:30 مساءً' },
+      { day: 'الإثنين', course: 'دورة التجويد المتقدم', time: '6:00 - 7:30 مساءً' },
+      { day: 'الثلاثاء', course: 'تحفيظ القرآن الكريم', time: '4:00 - 5:30 مساءً' },
+      { day: 'الأربعاء', course: 'دورة التجويد المتقدم', time: '6:00 - 7:30 مساءً' },
+      { day: 'الخميس', course: 'تحفيظ القرآن الكريم', time: '4:00 - 5:30 مساءً' }
+    ],
+    courseMaterials: [
+      { name: 'كتاب التجويد المصور', type: 'PDF', size: '2.5 MB' },
+      { name: 'مصحف برواية حفص', type: 'PDF', size: '15 MB' },
+      { name: 'تسجيلات صوتية للسور', type: 'Audio', size: '45 MB' },
+      { name: 'دليل أحكام التجويد', type: 'PDF', size: '1.8 MB' }
     ]
   };
 
@@ -109,8 +124,11 @@ const Student = () => {
               {studentData.currentCourses.map((course) => (
                 <Card key={course.id} className="shadow-lg">
                   <CardHeader>
-                    <CardTitle className="text-islamic-primary font-cairo">
+                    <CardTitle className="text-islamic-primary font-cairo flex justify-between items-center">
                       {course.name}
+                      <span className="bg-islamic-gold text-white px-3 py-1 rounded-full text-sm">
+                        {course.grade}
+                      </span>
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -148,6 +166,63 @@ const Student = () => {
             </div>
           </div>
 
+          {/* الجدول الأسبوعي والمواد الدراسية */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
+            {/* الجدول الأسبوعي */}
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-islamic-primary font-cairo flex items-center">
+                  <Calendar className="w-6 h-6 text-islamic-gold mr-2" />
+                  الجدول الأسبوعي
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {studentData.weeklySchedule.map((schedule, index) => (
+                    <div key={index} className="flex justify-between items-center p-3 bg-islamic-cream rounded-lg">
+                      <div>
+                        <p className="font-cairo text-islamic-primary font-medium">{schedule.day}</p>
+                        <p className="text-sm text-islamic-light font-cairo">{schedule.course}</p>
+                      </div>
+                      <p className="text-sm text-islamic-primary font-cairo">{schedule.time}</p>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* المواد الدراسية */}
+            <Card className="shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-islamic-primary font-cairo flex items-center">
+                  <FileText className="w-6 h-6 text-islamic-gold mr-2" />
+                  المواد الدراسية
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {studentData.courseMaterials.map((material, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 border border-islamic-gold/30 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-10 h-10 bg-islamic-gold/20 rounded-lg flex items-center justify-center">
+                          <FileText className="w-5 h-5 text-islamic-gold" />
+                        </div>
+                        <div>
+                          <p className="font-cairo text-islamic-primary font-medium">{material.name}</p>
+                          <p className="text-sm text-islamic-light font-cairo">{material.type} - {material.size}</p>
+                        </div>
+                      </div>
+                      <Button size="sm" variant="outline" className="border-islamic-primary text-islamic-primary hover:bg-islamic-primary hover:text-white">
+                        <Download className="w-4 h-4 mr-1" />
+                        تحميل
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           {/* الإنجازات الأخيرة والامتحانات القادمة */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* الإنجازات الأخيرة */}
@@ -177,7 +252,7 @@ const Student = () => {
             <Card className="shadow-lg">
               <CardHeader>
                 <CardTitle className="text-islamic-primary font-cairo flex items-center">
-                  <Calendar className="w-6 h-6 text-islamic-gold mr-2" />
+                  <GraduationCap className="w-6 h-6 text-islamic-gold mr-2" />
                   الامتحانات القادمة
                 </CardTitle>
               </CardHeader>
