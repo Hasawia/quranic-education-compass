@@ -1,4 +1,3 @@
-
 import NavBar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,7 +7,7 @@ import { BookOpen, Calendar, Award, User, Clock, CheckCircle, FileText, Graduati
 
 // صفحة الطلاب - بوابة الطالب الشاملة
 const Student = () => {
-  // بيانات وهمية للطالب
+  // بيانات وهمية للطالب مع إضافة تتبع حفظ القرآن
   const studentData = {
     name: 'محمد عبدالله أحمد',
     id: 'ST-2024-001',
@@ -16,6 +15,17 @@ const Student = () => {
     joinDate: '2023-09-01',
     totalHours: 120,
     completedCourses: 3,
+    // إضافة بيانات تقدم حفظ القرآن
+    quranProgress: {
+      totalSurahs: 114,
+      memorizedSurahs: 25,
+      currentSurah: 'سورة البقرة',
+      memorizedAjzaa: 8,
+      totalAjzaa: 30,
+      percentage: 65,
+      assignedTeacher: 'الشيخ أحمد محمد',
+      lastUpdate: '2024-01-15'
+    },
     currentCourses: [
       {
         id: 1,
@@ -24,7 +34,8 @@ const Student = () => {
         progress: 75,
         nextClass: 'الأحد 4:00 مساءً',
         currentSurah: 'سورة البقرة',
-        grade: 'A'
+        grade: 'A',
+        isMandatory: true
       },
       {
         id: 2,
@@ -33,7 +44,8 @@ const Student = () => {
         progress: 60,
         nextClass: 'الثلاثاء 6:00 مساءً',
         currentSurah: 'أحكام النون الساكنة',
-        grade: 'B+'
+        grade: 'B+',
+        isMandatory: false
       }
     ],
     recentAchievements: [
@@ -115,17 +127,104 @@ const Student = () => {
             </Card>
           </div>
 
-          {/* الدورات الحالية */}
+          {/* قسم تتبع حفظ القرآن الكريم */}
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-islamic-primary font-cairo mb-6 text-center">
+              تتبع حفظ القرآن الكريم
+            </h2>
+            <Card className="shadow-lg bg-gradient-to-br from-islamic-gold/10 to-islamic-light/10">
+              <CardHeader>
+                <CardTitle className="text-islamic-primary font-cairo flex items-center justify-between">
+                  <span>إحصائيات الحفظ</span>
+                  <span className="text-2xl font-bold text-islamic-gold">
+                    {studentData.quranProgress.percentage}%
+                  </span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {/* السور المحفوظة */}
+                  <div className="text-center p-4 bg-white rounded-lg shadow">
+                    <div className="text-3xl font-bold text-islamic-gold mb-2">
+                      {studentData.quranProgress.memorizedSurahs}
+                    </div>
+                    <div className="text-sm text-islamic-light font-cairo">
+                      من {studentData.quranProgress.totalSurahs} سورة
+                    </div>
+                    <div className="text-xs text-islamic-primary font-cairo mt-1">
+                      السور المحفوظة
+                    </div>
+                  </div>
+
+                  {/* الأجزاء المحفوظة */}
+                  <div className="text-center p-4 bg-white rounded-lg shadow">
+                    <div className="text-3xl font-bold text-islamic-gold mb-2">
+                      {studentData.quranProgress.memorizedAjzaa}
+                    </div>
+                    <div className="text-sm text-islamic-light font-cairo">
+                      من {studentData.quranProgress.totalAjzaa} جزء
+                    </div>
+                    <div className="text-xs text-islamic-primary font-cairo mt-1">
+                      الأجزاء المحفوظة
+                    </div>
+                  </div>
+
+                  {/* السورة الحالية */}
+                  <div className="text-center p-4 bg-white rounded-lg shadow">
+                    <div className="text-lg font-bold text-islamic-primary mb-2 font-cairo">
+                      {studentData.quranProgress.currentSurah}
+                    </div>
+                    <div className="text-xs text-islamic-light font-cairo">
+                      السورة قيد الحفظ
+                    </div>
+                  </div>
+
+                  {/* المدرس المسؤول */}
+                  <div className="text-center p-4 bg-white rounded-lg shadow">
+                    <div className="text-lg font-bold text-islamic-primary mb-2 font-cairo">
+                      {studentData.quranProgress.assignedTeacher}
+                    </div>
+                    <div className="text-xs text-islamic-light font-cairo">
+                      مدرس التحفيظ
+                    </div>
+                  </div>
+                </div>
+
+                {/* شريط التقدم العام */}
+                <div className="mt-6">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-sm font-cairo text-islamic-primary">التقدم العام في الحفظ</span>
+                    <span className="text-sm font-cairo text-islamic-gold font-bold">
+                      {studentData.quranProgress.percentage}%
+                    </span>
+                  </div>
+                  <Progress value={studentData.quranProgress.percentage} className="h-3 bg-islamic-cream" />
+                  <p className="text-xs text-islamic-light font-cairo mt-2">
+                    آخر تحديث: {studentData.quranProgress.lastUpdate}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* الدورات الحالية مع التمييز بين الإجبارية والاختيارية */}
           <div className="mb-12">
             <h2 className="text-3xl font-bold text-islamic-primary font-cairo mb-6 text-center">
               الدورات الحالية
             </h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {studentData.currentCourses.map((course) => (
-                <Card key={course.id} className="shadow-lg">
+                <Card key={course.id} className={`shadow-lg ${course.isMandatory ? 'border-2 border-islamic-gold' : ''}`}>
                   <CardHeader>
                     <CardTitle className="text-islamic-primary font-cairo flex justify-between items-center">
-                      {course.name}
+                      <div className="flex items-center space-x-2">
+                        <span>{course.name}</span>
+                        {course.isMandatory && (
+                          <span className="bg-islamic-gold text-white px-2 py-1 rounded-full text-xs">
+                            إجباري
+                          </span>
+                        )}
+                      </div>
                       <span className="bg-islamic-gold text-white px-3 py-1 rounded-full text-sm">
                         {course.grade}
                       </span>

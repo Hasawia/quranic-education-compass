@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 // صفحة إنشاء حساب جديد
 const Signup = () => {
@@ -14,7 +15,8 @@ const Signup = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: ''
+    phone: '',
+    accountType: 'student' // القيمة الافتراضية
   });
 
   const handleSubmit = (e) => {
@@ -23,7 +25,13 @@ const Signup = () => {
       alert('كلمات المرور غير متطابقة');
       return;
     }
-    // منطق إنشاء الحساب هنا
+    
+    // منطق إنشاء الحساب - إذا كان طالب، يتم تعيين مدرس تحفيظ تلقائياً
+    if (formData.accountType === 'student') {
+      // تعيين مدرس تحفيظ تلقائي للطالب
+      console.log('تم تعيين مدرس تحفيظ للطالب الجديد');
+    }
+    
     console.log('Signup attempted with:', formData);
     navigate('/login');
   };
@@ -32,6 +40,13 @@ const Signup = () => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
+    });
+  };
+
+  const handleRoleChange = (value) => {
+    setFormData({
+      ...formData,
+      accountType: value
     });
   };
 
@@ -61,6 +76,27 @@ const Signup = () => {
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* اختيار نوع الحساب */}
+              <div className="space-y-3">
+                <Label className="font-cairo text-islamic-primary font-medium">
+                  نوع الحساب
+                </Label>
+                <RadioGroup value={formData.accountType} onValueChange={handleRoleChange} className="grid grid-cols-2 gap-4">
+                  <div className="flex items-center space-x-2 border border-islamic-gold/30 rounded-lg p-3 hover:bg-islamic-gold/5 transition-colors">
+                    <RadioGroupItem value="student" id="student" className="border-islamic-gold text-islamic-gold" />
+                    <Label htmlFor="student" className="font-cairo text-islamic-primary cursor-pointer">
+                      طالب
+                    </Label>
+                  </div>
+                  <div className="flex items-center space-x-2 border border-islamic-gold/30 rounded-lg p-3 hover:bg-islamic-gold/5 transition-colors">
+                    <RadioGroupItem value="instructor" id="instructor" className="border-islamic-gold text-islamic-gold" />
+                    <Label htmlFor="instructor" className="font-cairo text-islamic-primary cursor-pointer">
+                      مدرس
+                    </Label>
+                  </div>
+                </RadioGroup>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="fullName" className="font-cairo text-islamic-primary">
                   الاسم الكامل

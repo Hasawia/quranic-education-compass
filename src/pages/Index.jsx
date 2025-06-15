@@ -19,51 +19,64 @@ const Index = () => {
         <NavBar />
 
         {/* المحتوى الرئيسي */}
-        <div className="flex flex-col items-center justify-start pt-20 px-6 text-center text-white">
-          {/* العنوان الرئيسي */}
-          <div className="max-w-4xl mx-auto mb-12 animate-fade-in">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold font-amiri mb-6 text-islamic-gold leading-tight">
-              مسجد خالد ابن الوليد
-            </h1>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-cairo mb-8 text-islamic-light">
-              لتحفيظ وتعليم القرآن الكريم
-            </h2>
-            <p className="text-lg md:text-xl font-cairo leading-relaxed max-w-3xl mx-auto opacity-90">
-              دورة شاملة تهدف إلى تعليم القرآن الكريم تلاوةً وتدبراً وحفظاً، ضمن بيئة تعليمية إيمانية ملهمة تحت إشراف نخبة من المعلمين المتخصصين.
-            </p>
-          </div>
-
-          {/* تخطيط الصور */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto mb-16">
-            {/* الصورة الكبيرة على اليسار */}
-            <div className="lg:col-span-2">
-              <div className="relative overflow-hidden rounded-xl shadow-2xl group">
-                <img 
-                  src="https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=800&h=600&fit=crop"
-                  alt="Mosque Interior"
-                  className="w-full h-80 lg:h-96 object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-islamic-primary/20 group-hover:bg-islamic-primary/10 transition-colors"></div>
+        <div className="flex items-center justify-center px-6 pt-20 pb-16 text-white">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              
+              {/* النصوص الرئيسية - محاذاة لليمين */}
+              <div className="order-2 lg:order-1 text-right">
+                <div className="space-y-6 animate-fade-in">
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-amiri leading-tight" style={{ color: '#B88A2E' }}>
+                    مسجد خالد ابن الوليد
+                  </h1>
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-cairo mb-8" style={{ color: '#0E4C33' }}>
+                    لتعليم وتحفيظ القرآن الكريم
+                  </h2>
+                  <p className="text-lg md:text-xl font-cairo leading-relaxed opacity-90 max-w-2xl">
+                    دورة شاملة تهدف إلى تعليم القرآن الكريم تلاوةً وتدبراً وحفظاً، ضمن بيئة تعليمية إيمانية ملهمة تحت إشراف نخبة من المعلمين المتخصصين.
+                  </p>
+                </div>
               </div>
-            </div>
 
-            {/* الصورتان المكدستان على اليمين */}
-            <div className="space-y-6">
-              <div className="relative overflow-hidden rounded-xl shadow-2xl group">
-                <img 
-                  src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=300&fit=crop"
-                  alt="Quran Study"
-                  className="w-full h-36 lg:h-44 object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-islamic-primary/20 group-hover:bg-islamic-primary/10 transition-colors"></div>
-              </div>
-              <div className="relative overflow-hidden rounded-xl shadow-2xl group">
-                <img 
-                  src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=300&fit=crop"
-                  alt="Islamic Calligraphy"
-                  className="w-full h-36 lg:h-44 object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-islamic-primary/20 group-hover:bg-islamic-primary/10 transition-colors"></div>
+              {/* تخطيط الصور - الجانب الأيسر */}
+              <div className="order-1 lg:order-2">
+                <div className="grid grid-cols-2 gap-4 h-96">
+                  {/* الصورة الكبيرة - داخل المسجد الفارغ */}
+                  <div className="col-span-1 row-span-2">
+                    <div className="relative overflow-hidden rounded-xl shadow-2xl group h-full">
+                      <img 
+                        src="https://images.unsplash.com/photo-1473177104440-ffee2f376098?w=600&h=800&fit=crop"
+                        alt="Empty Mosque Interior"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-islamic-primary/20 group-hover:bg-islamic-primary/10 transition-colors"></div>
+                    </div>
+                  </div>
+
+                  {/* الصورة الصغيرة العلوية - طلاب يقرؤون القرآن */}
+                  <div className="col-span-1">
+                    <div className="relative overflow-hidden rounded-xl shadow-2xl group h-full">
+                      <img 
+                        src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=300&fit=crop"
+                        alt="Students Reading Quran"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-islamic-primary/20 group-hover:bg-islamic-primary/10 transition-colors"></div>
+                    </div>
+                  </div>
+
+                  {/* الصورة الصغيرة السفلية - معلم يتلو القرآن */}
+                  <div className="col-span-1">
+                    <div className="relative overflow-hidden rounded-xl shadow-2xl group h-full">
+                      <img 
+                        src="https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=300&fit=crop"
+                        alt="Teacher Reciting Quran"
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-islamic-primary/20 group-hover:bg-islamic-primary/10 transition-colors"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
