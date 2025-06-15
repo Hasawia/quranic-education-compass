@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // بطاقات المواضيع الإسلامية
 const TopicsCards = () => {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState(null);
 
   const topics = [
     {

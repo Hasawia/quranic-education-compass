@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 // صفحة إنشاء حساب جديد
 const Signup = () => {
@@ -14,24 +15,43 @@ const Signup = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: ''
+    phone: '',
+    accountType: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert('كلمات المرور غير متطابقة');
       return;
     }
+    if (!formData.accountType) {
+      alert('يرجى اختيار نوع الحساب');
+      return;
+    }
+    
     // منطق إنشاء الحساب هنا
     console.log('Signup attempted with:', formData);
+    
+    // إذا كان الطالب، يتم تعيينه تلقائياً لمعلم قرآن
+    if (formData.accountType === 'student') {
+      console.log('Student registered - automatically assigned to Quran teacher');
+    }
+    
     navigate('/login');
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
+    });
+  };
+
+  const handleAccountTypeChange = (value) => {
+    setFormData({
+      ...formData,
+      accountType: value
     });
   };
 
@@ -107,6 +127,33 @@ const Signup = () => {
                   className="font-cairo focus:border-islamic-gold focus:ring-islamic-gold"
                   placeholder="أدخل رقم هاتفك"
                 />
+              </div>
+
+              {/* اختيار نوع الحساب */}
+              <div className="space-y-2">
+                <Label className="font-cairo text-islamic-primary">
+                  نوع الحساب
+                </Label>
+                <Select onValueChange={handleAccountTypeChange} required>
+                  <SelectTrigger className="font-cairo focus:border-islamic-gold focus:ring-islamic-gold">
+                    <SelectValue placeholder="اختر نوع الحساب" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="student" className="font-cairo">
+                      طالب
+                    </SelectItem>
+                    <SelectItem value="instructor" className="font-cairo">
+                      مدرس
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+                
+                {/* ملاحظة للطلاب */}
+                {formData.accountType === 'student' && (
+                  <p className="text-sm text-islamic-light font-cairo mt-2">
+                    ملاحظة: سيتم تعيينك تلقائياً لمعلم تحفيظ القرآن الكريم
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
