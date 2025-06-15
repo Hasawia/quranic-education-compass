@@ -1,217 +1,242 @@
 
 import { useState } from 'react';
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
-import { mockAttendanceData } from '@/data/mockData';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { Button } from '../components/ui/button';
+import { Calendar, CheckCircle, XCircle, Clock, Users } from 'lucide-react';
 
 // صفحة حضور الدورة
 const CourseAttendance = () => {
-  const [openDays, setOpenDays] = useState([]);
+  const [selectedMonth, setSelectedMonth] = useState('2024-01');
 
-  const toggleDay = (index) => {
-    setOpenDays(prev => 
-      prev.includes(index) 
-        ? prev.filter(i => i !== index)
-        : [...prev, index]
-    );
+  const attendanceData = {
+    courseName: 'دورة تحفيظ القرآن الكريم',
+    totalClasses: 24,
+    attended: 22,
+    absent: 2,
+    attendanceRate: 92,
+    currentStreak: 8
   };
 
-  // حساب إحصائيات الحضور
-  const calculateStats = () => {
-    const totalDays = mockAttendanceData.length;
-    const totalStudents = mockAttendanceData[0]?.students.length || 0;
-    
-    const dailyStats = mockAttendanceData.map(day => {
-      const present = day.students.filter(s => s.status === 'حاضر').length;
-      const absent = day.students.filter(s => s.status === 'غائب').length;
-      return { day: day.day, present, absent, percentage: (present / totalStudents) * 100 };
-    });
+  const monthlyAttendance = [
+    { date: '2024-01-01', status: 'present', topic: 'مراجعة سورة الفاتحة' },
+    { date: '2024-01-03', status: 'present', topic: 'حفظ آيات البقرة 1-5' },
+    { date: '2024-01-06', status: 'absent', topic: 'مراجعة الحفظ السابق' },
+    { date: '2024-01-08', status: 'present', topic: 'حفظ آيات البقرة 6-10' },
+    { date: '2024-01-10', status: 'present', topic: 'أحكام التجويد - المد' },
+    { date: '2024-01-13', status: 'present', topic: 'حفظ آيات البقرة 11-15' },
+    { date: '2024-01-15', status: 'present', topic: 'مراجعة شاملة' },
+    { date: '2024-01-17', status: 'absent', topic: 'حفظ آيات البقرة 16-20' },
+    { date: '2024-01-20', status: 'present', topic: 'أحكام التجويد - الإدغام' },
+    { date: '2024-01-22', status: 'present', topic: 'حفظ آيات البقرة 21-25' }
+  ];
 
-    return { totalDays, totalStudents, dailyStats };
-  };
-
-  const stats = calculateStats();
+  const upcomingClasses = [
+    { date: '2024-01-24', time: '16:00', topic: 'مراجعة الأسبوع', instructor: 'الشيخ أحمد' },
+    { date: '2024-01-27', time: '16:00', topic: 'حفظ آيات جديدة', instructor: 'الشيخ أحمد' },
+    { date: '2024-01-29', time: '16:00', topic: 'أحكام التجويد', instructor: 'الأستاذ محمد' }
+  ];
 
   return (
     <div className="min-h-screen bg-islamic-cream">
       <NavBar />
       
-      <div className="py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          {/* العنوان */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-islamic-gold font-cairo mb-4">
-              Course's Attendance
-            </h1>
-            <p className="text-xl text-islamic-light font-cairo">
-              متابعة حضور الطلاب في دورة تحفيظ القرآن الكريم
-            </p>
-          </div>
+      {/* عنوان الصفحة */}
+      <div className="pt-20 pb-12">
+        <div className="max-w-7xl mx-auto px-6">
+          <h1 className="text-3xl font-bold text-islamic-primary font-cairo mb-2">
+            سجل الحضور
+          </h1>
+          <p className="text-islamic-light font-cairo">
+            {attendanceData.courseName}
+          </p>
+        </div>
+      </div>
 
-          {/* إحصائيات سريعة */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <Card className="text-center">
-              <CardHeader>
-                <CardTitle className="text-2xl font-cairo text-islamic-primary">
-                  إجمالي الأيام
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-4xl font-bold text-islamic-gold">
-                  {stats.totalDays}
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <CardTitle className="text-2xl font-cairo text-islamic-primary">
-                  عدد الطلاب
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-4xl font-bold text-islamic-gold">
-                  {stats.totalStudents}
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="text-center">
-              <CardHeader>
-                <CardTitle className="text-2xl font-cairo text-islamic-primary">
-                  متوسط الحضور
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-4xl font-bold text-islamic-gold">
-                  {Math.round(stats.dailyStats.reduce((acc, day) => acc + day.percentage, 0) / stats.dailyStats.length)}%
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* قائمة الأيام القابلة للطي */}
-          <div className="space-y-4 mb-8">
-            <h2 className="text-2xl font-bold text-islamic-primary font-cairo text-center mb-6">
-              سجل الحضور اليومي
-            </h2>
-            
-            {mockAttendanceData.map((dayData, index) => (
-              <Card key={index} className="shadow-lg">
-                <Collapsible open={openDays.includes(index)}>
-                  <CollapsibleTrigger asChild>
-                    <CardHeader 
-                      className="cursor-pointer hover:bg-islamic-cream/50 transition-colors"
-                      onClick={() => toggleDay(index)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-4">
-                          <CardTitle className="text-xl font-cairo text-islamic-primary">
-                            {dayData.day} - {dayData.date}
-                          </CardTitle>
-                          <div className="flex space-x-2">
-                            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-md text-sm font-cairo">
-                              حاضر: {dayData.students.filter(s => s.status === 'حاضر').length}
-                            </span>
-                            <span className="bg-red-100 text-red-800 px-2 py-1 rounded-md text-sm font-cairo">
-                              غائب: {dayData.students.filter(s => s.status === 'غائب').length}
-                            </span>
-                          </div>
-                        </div>
-                        <ChevronDown 
-                          className={`h-5 w-5 text-islamic-light transition-transform ${
-                            openDays.includes(index) ? 'rotate-180' : ''
-                          }`}
-                        />
-                      </div>
-                    </CardHeader>
-                  </CollapsibleTrigger>
-                  
-                  <CollapsibleContent>
-                    <CardContent>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {dayData.students.map((student, studentIndex) => (
-                          <div 
-                            key={studentIndex}
-                            className={`flex items-center justify-between p-3 rounded-lg ${
-                              student.status === 'حاضر' 
-                                ? 'bg-green-50 border border-green-200' 
-                                : 'bg-red-50 border border-red-200'
-                            }`}
-                          >
-                            <span className="font-cairo text-islamic-primary font-medium">
-                              {student.name}
-                            </span>
-                            <span className={`px-3 py-1 rounded-full text-sm font-cairo font-medium ${
-                              student.status === 'حاضر'
-                                ? 'bg-green-200 text-green-800'
-                                : 'bg-red-200 text-red-800'
-                            }`}>
-                              {student.status}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </CardContent>
-                  </CollapsibleContent>
-                </Collapsible>
-              </Card>
-            ))}
-          </div>
-
-          {/* ملخص الحضور المرئي */}
-          <Card className="shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-2xl font-cairo text-islamic-primary text-center">
-                ملخص الحضور اليومي
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {stats.dailyStats.map((dayStat, index) => (
-                  <div key={index} className="text-center p-4 bg-islamic-cream rounded-lg">
-                    <h3 className="font-bold text-islamic-primary font-cairo mb-2">
-                      {dayStat.day}
-                    </h3>
-                    <div className="relative w-20 h-20 mx-auto mb-2">
-                      <svg className="w-20 h-20 transform -rotate-90" viewBox="0 0 100 100">
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="40"
-                          stroke="#e5e7eb"
-                          strokeWidth="10"
-                          fill="transparent"
-                        />
-                        <circle
-                          cx="50"
-                          cy="50"
-                          r="40"
-                          stroke="#C6953E"
-                          strokeWidth="10"
-                          fill="transparent"
-                          strokeDasharray={`${dayStat.percentage * 2.51} 251`}
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-sm font-bold text-islamic-primary">
-                          {Math.round(dayStat.percentage)}%
-                        </span>
-                      </div>
-                    </div>
-                    <p className="text-sm text-islamic-light font-cairo">
-                      {dayStat.present} من {stats.totalStudents}
-                    </p>
-                  </div>
-                ))}
+      <div className="max-w-7xl mx-auto px-6 pb-16">
+        {/* إحصائيات الحضور */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-islamic-light font-cairo">إجمالي الحصص</p>
+                  <p className="text-2xl font-bold text-islamic-primary">{attendanceData.totalClasses}</p>
+                </div>
+                <Calendar className="w-8 h-8 text-islamic-gold" />
               </div>
             </CardContent>
           </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-islamic-light font-cairo">حضور</p>
+                  <p className="text-2xl font-bold text-green-600">{attendanceData.attended}</p>
+                </div>
+                <CheckCircle className="w-8 h-8 text-green-500" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-islamic-light font-cairo">غياب</p>
+                  <p className="text-2xl font-bold text-red-600">{attendanceData.absent}</p>
+                </div>
+                <XCircle className="w-8 h-8 text-red-500" />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-islamic-light font-cairo">نسبة الحضور</p>
+                  <p className="text-2xl font-bold text-islamic-primary">{attendanceData.attendanceRate}%</p>
+                </div>
+                <Users className="w-8 h-8 text-islamic-gold" />
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* سجل الحضور الشهري */}
+          <div className="lg:col-span-2">
+            <Card>
+              <CardHeader>
+                <div className="flex justify-between items-center">
+                  <CardTitle className="font-cairo text-islamic-primary">سجل الحضور الشهري</CardTitle>
+                  <select 
+                    value={selectedMonth}
+                    onChange={(e) => setSelectedMonth(e.target.value)}
+                    className="border rounded-md px-3 py-1 font-cairo text-sm"
+                  >
+                    <option value="2024-01">يناير 2024</option>
+                    <option value="2023-12">ديسمبر 2023</option>
+                    <option value="2023-11">نوفمبر 2023</option>
+                  </select>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {monthlyAttendance.map((record, index) => (
+                    <div key={index} className="flex items-center justify-between p-4 bg-islamic-cream rounded-lg">
+                      <div className="flex items-center space-x-4">
+                        <div className="flex items-center justify-center w-10 h-10 rounded-full">
+                          {record.status === 'present' ? (
+                            <CheckCircle className="w-6 h-6 text-green-500" />
+                          ) : (
+                            <XCircle className="w-6 h-6 text-red-500" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-cairo font-medium text-islamic-primary">
+                            {new Date(record.date).toLocaleDateString('ar-SA')}
+                          </p>
+                          <p className="text-sm text-islamic-light font-cairo">
+                            {record.topic}
+                          </p>
+                        </div>
+                      </div>
+                      <Badge 
+                        variant={record.status === 'present' ? 'default' : 'destructive'}
+                        className="font-cairo"
+                      >
+                        {record.status === 'present' ? 'حضور' : 'غياب'}
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* الشريط الجانبي */}
+          <div className="space-y-6">
+            {/* الحصص القادمة */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">الحصص القادمة</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {upcomingClasses.map((class_, index) => (
+                    <div key={index} className="p-3 border rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-cairo font-medium text-islamic-primary">
+                          {class_.topic}
+                        </p>
+                        <Clock className="w-4 h-4 text-islamic-gold" />
+                      </div>
+                      <p className="text-sm text-islamic-light font-cairo">
+                        {new Date(class_.date).toLocaleDateString('ar-SA')} - {class_.time}
+                      </p>
+                      <p className="text-sm text-islamic-light font-cairo">
+                        المدرس: {class_.instructor}
+                      </p>
+                      <Button 
+                        size="sm" 
+                        className="w-full mt-2 bg-islamic-gold hover:bg-islamic-gold/90 text-white font-cairo"
+                      >
+                        تأكيد الحضور
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* إحصائيات إضافية */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">إحصائيات إضافية</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <span className="font-cairo text-islamic-light">سلسلة الحضور الحالية</span>
+                    <Badge className="bg-islamic-gold text-white">
+                      {attendanceData.currentStreak} أيام
+                    </Badge>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="font-cairo text-islamic-light">أفضل شهر</span>
+                    <span className="font-cairo text-islamic-primary">ديسمبر (100%)</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="font-cairo text-islamic-light">متوسط الحضور</span>
+                    <span className="font-cairo text-islamic-primary">94%</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* نصائح للحضور */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">نصائح للحضور المنتظم</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm font-cairo text-islamic-light">
+                  <li>• ضع تذكيرات في هاتفك</li>
+                  <li>• احضر مبكراً بـ 10 دقائق</li>
+                  <li>• أحضر دفتر الملاحظات</li>
+                  <li>• تواصل مع المدرس عند الغياب</li>
+                  <li>• احضر مع صديق للتحفيز</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 

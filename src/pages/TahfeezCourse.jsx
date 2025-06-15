@@ -1,186 +1,257 @@
 
 import { useState } from 'react';
-import NavBar from '@/components/NavBar';
-import Footer from '@/components/Footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Progress } from '../components/ui/progress';
+import { Badge } from '../components/ui/badge';
+import { BookOpen, Users, Calendar, Star, Clock } from 'lucide-react';
 
-// صفحة دورات التحفيظ
+// صفحة دورة التحفيظ
 const TahfeezCourse = () => {
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [enrollmentStatus, setEnrollmentStatus] = useState('not-enrolled'); // 'not-enrolled', 'enrolled', 'completed'
 
-  // بيانات وهمية للمجموعات
-  const groups = [
-    {
-      id: 1,
-      name: 'مجموعة الفجر',
-      instructor: 'الشيخ أحمد محمد',
-      instructorImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
-      students: [
-        { name: 'محمد علي', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face' },
-        { name: 'عبدالله أحمد', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face' },
-        { name: 'يوسف محمد', image: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=100&h=100&fit=crop&crop=face' },
-        { name: 'عمر حسن', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face' }
-      ],
-      image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=300&h=200&fit=crop'
-    },
-    {
-      id: 2,
-      name: 'مجموعة الضحى',
-      instructor: 'الشيخ محمد حسن',
-      instructorImage: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face',
-      students: [
-        { name: 'سعد عبدالله', image: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&h=100&fit=crop&crop=face' },
-        { name: 'خالد أحمد', image: 'https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?w=100&h=100&fit=crop&crop=face' },
-        { name: 'فيصل محمد', image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face' }
-      ],
-      image: 'https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=300&h=200&fit=crop'
-    },
-    {
-      id: 3,
-      name: 'مجموعة العصر',
-      instructor: 'الشيخ عبدالرحمن علي',
-      instructorImage: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face',
-      students: [
-        { name: 'ناصر سعد', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face' },
-        { name: 'إبراهيم محمد', image: 'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=100&h=100&fit=crop&crop=face' },
-        { name: 'حسام أحمد', image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&crop=face' },
-        { name: 'طارق عبدالله', image: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100&h=100&fit=crop&crop=face' },
-        { name: 'سلمان حسن', image: 'https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?w=100&h=100&fit=crop&crop=face' }
-      ],
-      image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=300&h=200&fit=crop'
-    }
-  ];
+  const courseData = {
+    title: 'دورة تحفيظ القرآن الكريم',
+    description: 'دورة شاملة لتحفيظ القرآن الكريم بأحكام التجويد الصحيحة',
+    duration: '24 شهر',
+    level: 'جميع المستويات',
+    students: 150,
+    rating: 4.9,
+    instructor: 'الشيخ أحمد محمد',
+    price: 'مجاني',
+    schedule: [
+      { day: 'السبت', time: '16:00 - 18:00' },
+      { day: 'الاثنين', time: '16:00 - 18:00' },
+      { day: 'الأربعاء', time: '16:00 - 18:00' }
+    ],
+    modules: [
+      {
+        title: 'أساسيات التلاوة',
+        lessons: 8,
+        duration: '2 أسابيع',
+        completed: enrollmentStatus === 'enrolled' ? 6 : 0
+      },
+      {
+        title: 'أحكام التجويد',
+        lessons: 12,
+        duration: '3 أسابيع',
+        completed: enrollmentStatus === 'enrolled' ? 8 : 0
+      },
+      {
+        title: 'حفظ جزء عم',
+        lessons: 16,
+        duration: '4 أسابيع',
+        completed: enrollmentStatus === 'enrolled' ? 12 : 0
+      },
+      {
+        title: 'حفظ جزء تبارك',
+        lessons: 20,
+        duration: '5 أسابيع',
+        completed: enrollmentStatus === 'enrolled' ? 5 : 0
+      }
+    ]
+  };
+
+  const handleEnrollment = () => {
+    setEnrollmentStatus('enrolled');
+  };
 
   return (
     <div className="min-h-screen bg-islamic-cream">
       <NavBar />
       
-      <div className="py-12">
+      {/* رأس الصفحة */}
+      <div className="pt-20 pb-12 bg-gradient-to-r from-islamic-primary to-islamic-light">
         <div className="max-w-7xl mx-auto px-6">
-          {/* العنوان الرئيسي */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-islamic-gold font-cairo mb-4">
-              Tahfeez Course Page
-            </h1>
-            <p className="text-xl text-islamic-light font-cairo">
-              اختر المجموعة لعرض تفاصيلها
-            </p>
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="text-white">
+              <h1 className="text-4xl font-bold font-cairo mb-4">
+                {courseData.title}
+              </h1>
+              <p className="text-lg font-cairo mb-6 opacity-90">
+                {courseData.description}
+              </p>
+              
+              <div className="flex flex-wrap gap-4 mb-6">
+                <Badge className="bg-islamic-gold text-white">
+                  <Clock className="w-4 h-4 ml-1" />
+                  {courseData.duration}
+                </Badge>
+                <Badge className="bg-islamic-gold text-white">
+                  <Users className="w-4 h-4 ml-1" />
+                  {courseData.students} طالب
+                </Badge>
+                <Badge className="bg-islamic-gold text-white">
+                  <Star className="w-4 h-4 ml-1" />
+                  {courseData.rating}
+                </Badge>
+              </div>
 
-          {/* دوران المجموعات */}
-          <div className="mb-12">
-            <h2 className="text-2xl font-bold text-islamic-primary font-cairo mb-6 text-center">
-              مجموعات التحفيظ
-            </h2>
-            <div className="flex overflow-x-auto space-x-6 pb-4">
-              {groups.map((group) => (
-                <Card 
-                  key={group.id}
-                  className={`min-w-72 cursor-pointer transition-all duration-300 hover:shadow-lg ${
-                    selectedGroup === group.id ? 'ring-2 ring-islamic-gold' : ''
-                  }`}
-                  onClick={() => setSelectedGroup(group.id)}
+              <div className="space-y-2 text-islamic-cream">
+                <p className="font-cairo">المدرس: {courseData.instructor}</p>
+                <p className="font-cairo">المستوى: {courseData.level}</p>
+                <p className="font-cairo text-xl font-bold text-islamic-gold">
+                  السعر: {courseData.price}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-2xl">
+              <img 
+                src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?w=500&h=300&fit=crop"
+                alt="Quran Learning"
+                className="w-full h-48 object-cover rounded-lg mb-4"
+              />
+              
+              {enrollmentStatus === 'not-enrolled' && (
+                <Button 
+                  onClick={handleEnrollment}
+                  className="w-full bg-islamic-gold hover:bg-islamic-gold/90 text-white font-cairo text-lg py-3"
                 >
-                  <CardHeader className="pb-2">
-                    <img 
-                      src={group.image}
-                      alt={group.name}
-                      className="w-full h-32 object-cover rounded-md mb-3"
-                    />
-                    <CardTitle className="text-lg font-cairo text-islamic-primary">
-                      {group.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-islamic-light font-cairo">
-                      المعلم: {group.instructor}
-                    </p>
-                    <p className="text-sm text-gray-600 font-cairo mt-1">
-                      {group.students.length} طالب
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+                  التسجيل في الدورة
+                </Button>
+              )}
+
+              {enrollmentStatus === 'enrolled' && (
+                <div className="space-y-3">
+                  <Badge className="w-full justify-center bg-green-500 text-white py-2">
+                    مسجل في الدورة
+                  </Badge>
+                  <Button 
+                    className="w-full bg-islamic-primary hover:bg-islamic-primary/90 text-white font-cairo"
+                  >
+                    متابعة التعلم
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* معلومات المجموعة المختارة */}
-          {selectedGroup && (
-            <div className="animate-fade-in">
-              {(() => {
-                const group = groups.find(g => g.id === selectedGroup);
-                if (!group) return null;
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* المحتوى الرئيسي */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* وصف الدورة */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">عن الدورة</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="font-cairo text-islamic-light leading-relaxed">
+                  دورة تحفيظ القرآن الكريم هي رحلة روحانية وتعليمية شاملة تهدف إلى تعليم الطلاب 
+                  حفظ كتاب الله تعالى بالطريقة الصحيحة. تتضمن الدورة تعليم أحكام التجويد، 
+                  وطرق الحفظ الفعالة، والتدبر في معاني الآيات.
+                </p>
+                <p className="font-cairo text-islamic-light leading-relaxed">
+                  نستخدم منهجاً تدريجياً يبدأ من الأساسيات وينتهي بحفظ أجزاء كاملة من القرآن، 
+                  مع التركيز على الجودة والإتقان بدلاً من السرعة فقط.
+                </p>
+              </CardContent>
+            </Card>
 
-                return (
-                  <Card className="shadow-xl">
-                    <CardHeader>
-                      <CardTitle className="text-2xl font-cairo text-islamic-primary text-center">
-                        معلومات {group.name}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {/* معلومات المعلم */}
-                        <div className="text-center">
-                          <h3 className="text-xl font-bold text-islamic-gold font-cairo mb-4">
-                            المعلم المشرف
-                          </h3>
-                          <div className="flex flex-col items-center">
-                            <img 
-                              src={group.instructorImage}
-                              alt={group.instructor}
-                              className="w-32 h-32 rounded-full object-cover border-4 border-islamic-gold mb-4"
-                            />
-                            <h4 className="text-lg font-bold text-islamic-primary font-cairo">
-                              {group.instructor}
-                            </h4>
-                          </div>
-                        </div>
-
-                        {/* الطلاب المسجلون */}
+            {/* محتوى الدورة */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">محتوى الدورة</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {courseData.modules.map((module, index) => (
+                    <div key={index} className="border rounded-lg p-4">
+                      <div className="flex justify-between items-start mb-3">
                         <div>
-                          <h3 className="text-xl font-bold text-islamic-gold font-cairo mb-4 text-center">
-                            الطلاب المسجلون
+                          <h3 className="font-cairo font-medium text-islamic-primary">
+                            {module.title}
                           </h3>
-                          <div className="grid grid-cols-2 gap-4">
-                            {group.students.map((student, index) => (
-                              <div key={index} className="flex items-center space-x-3 p-3 bg-islamic-cream rounded-lg">
-                                <img 
-                                  src={student.image}
-                                  alt={student.name}
-                                  className="w-12 h-12 rounded-full object-cover"
-                                />
-                                <span className="font-cairo text-islamic-primary">
-                                  {student.name}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
+                          <p className="text-sm text-islamic-light font-cairo">
+                            {module.lessons} دروس • {module.duration}
+                          </p>
                         </div>
+                        {enrollmentStatus === 'enrolled' && (
+                          <Badge variant="outline">
+                            {module.completed}/{module.lessons}
+                          </Badge>
+                        )}
                       </div>
+                      
+                      {enrollmentStatus === 'enrolled' && (
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span className="font-cairo">التقدم</span>
+                            <span className="font-cairo">
+                              {Math.round((module.completed / module.lessons) * 100)}%
+                            </span>
+                          </div>
+                          <Progress 
+                            value={(module.completed / module.lessons) * 100} 
+                            className="h-2"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
 
-                      {/* أزرار الإجراءات */}
-                      <div className="mt-8 text-center space-x-4">
-                        <Button 
-                          className="bg-islamic-gold hover:bg-islamic-gold/90 text-white font-cairo"
-                          onClick={() => window.location.href = '/course-attendance'}
-                        >
-                          عرض الحضور
-                        </Button>
-                        <Button 
-                          variant="outline"
-                          className="border-islamic-primary text-islamic-primary hover:bg-islamic-primary hover:text-white font-cairo"
-                        >
-                          تفاصيل المجموعة
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })()}
-            </div>
-          )}
+          {/* الشريط الجانبي */}
+          <div className="space-y-6">
+            {/* الجدول الزمني */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">مواعيد الحصص</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-3">
+                  {courseData.schedule.map((schedule, index) => (
+                    <div key={index} className="flex justify-between items-center p-3 bg-islamic-cream rounded-lg">
+                      <span className="font-cairo text-islamic-primary">{schedule.day}</span>
+                      <span className="font-cairo text-islamic-light">{schedule.time}</span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* متطلبات الدورة */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">ما تحتاجه</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm font-cairo text-islamic-light">
+                  <li>• نية صادقة لحفظ القرآن</li>
+                  <li>• مصحف شريف</li>
+                  <li>• دفتر للملاحظات</li>
+                  <li>• التزام بالحضور</li>
+                  <li>• وقت يومي للمراجعة</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* شهادة الإكمال */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="font-cairo text-islamic-primary">شهادة الإكمال</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm font-cairo text-islamic-light mb-4">
+                  احصل على شهادة معتمدة عند إكمال الدورة بنجاح
+                </p>
+                <div className="flex items-center space-x-2">
+                  <BookOpen className="w-5 h-5 text-islamic-gold" />
+                  <span className="text-sm font-cairo text-islamic-primary">
+                    شهادة معتمدة من المسجد
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
 

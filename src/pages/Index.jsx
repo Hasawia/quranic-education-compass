@@ -1,8 +1,8 @@
 
-import NavBar from '@/components/NavBar';
-import TopicsCards from '@/components/TopicsCards';
-import HadithQuote from '@/components/HadithQuote';
-import Footer from '@/components/Footer';
+import NavBar from '../components/NavBar';
+import TopicsCards from '../components/TopicsCards';
+import HadithQuote from '../components/HadithQuote';
+import Footer from '../components/Footer';
 
 // الصفحة الرئيسية
 const Index = () => {
