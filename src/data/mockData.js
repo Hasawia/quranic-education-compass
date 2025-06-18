@@ -1,90 +1,154 @@
 
-// بيانات وهمية للمدرسين
-export const mockInstructors = [
+// بيانات وهمية للمشروع
+
+// بيانات المدرسين
+export const instructors = [
   {
     id: 1,
-    name: "الشيخ أحمد محمد",
-    email: "ahmed.mohamed@mosque.com",
-    phone: "+20 123 456 7890",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
-    specializations: ["تحفيظ القرآن", "التجويد", "القراءات"],
-    bio: "خبرة أكثر من 15 عاماً في تعليم القرآن الكريم والتجويد. حاصل على إجازة في القراءات العشر من الأزهر الشريف.",
-    courses: ["دورة تحفيظ القرآن للمبتدئين", "دورة التجويد المتقدمة", "دورة القراءات العشر"]
+    name: 'الشيخ أحمد محمد',
+    specialization: 'تحفيظ القرآن الكريم',
+    experience: '15 سنة',
+    image: '/placeholder.svg',
+    courses: ['تحفيظ القرآن', 'التجويد'],
+    bio: 'خبير في تحفيظ القرآن الكريم وعلوم التجويد'
   },
   {
     id: 2,
-    name: "الدكتور محمد عبدالله",
-    email: "mohamed.abdullah@mosque.com", 
-    phone: "+20 123 456 7891",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
-    specializations: ["تفسير القرآن", "الحديث الشريف", "العقيدة"],
-    bio: "دكتوراه في التفسير والعلوم القرآنية من جامعة الأزهر. متخصص في تدريس علوم القرآن والتفسير.",
-    courses: ["دورة تفسير القرآن", "دورة علوم القرآن", "دورة الحديث النبوي"]
+    name: 'الأستاذ محمد علي',
+    specialization: 'التجويد والقراءات',
+    experience: '12 سنة',
+    image: '/placeholder.svg',
+    courses: ['التجويد', 'القراءات'],
+    bio: 'متخصص في علوم التجويد والقراءات القرآنية'
   },
   {
     id: 3,
-    name: "الأستاذ عبدالرحمن أحمد",
-    email: "abdelrahman.ahmed@mosque.com",
-    phone: "+20 123 456 7892", 
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
-    specializations: ["تحفيظ القرآن للأطفال", "التربية الإسلامية"],
-    bio: "متخصص في تعليم الأطفال وتحفيظهم القرآن الكريم بطرق تربوية حديثة. خبرة 10 سنوات في التدريس.",
-    courses: ["دورة تحفيظ القرآن للأطفال", "دورة الآداب الإسلامية للصغار"]
-  },
-  {
-    id: 4,
-    name: "الشيخ يوسف إبراهيم",
-    email: "yousef.ibrahim@mosque.com",
-    phone: "+20 123 456 7893",
-    image: "https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=400&h=400&fit=crop&crop=face", 
-    specializations: ["تجويد القرآن", "الوقف والابتداء", "رسم المصحف"],
-    bio: "إمام وخطيب المسجد، حاصل على إجازة في التجويد والقراءات. يدرس علم التجويد وأحكام التلاوة.",
-    courses: ["دورة التجويد للمبتدئين", "دورة الوقف والابتداء", "دورة رسم المصحف"]
+    name: 'الشيخ عبد الرحمن أحمد',
+    specialization: 'الحديث الشريف',
+    experience: '20 سنة',
+    image: '/placeholder.svg',
+    courses: ['الحديث', 'السيرة النبوية'],
+    bio: 'عالم في الحديث الشريف والسيرة النبوية'
   }
 ];
 
-// بيانات وهمية لحضور الطلاب
-export const mockAttendanceData = [
+// بيانات الطلاب
+export const students = [
   {
-    day: "الأسبوع الأول",
-    date: "2024-01-07",
-    students: [
-      { name: "أحمد محمد علي", status: "حاضر" },
-      { name: "فاطمة أحمد حسن", status: "حاضر" },
-      { name: "محمد عبدالله سالم", status: "غائب" },
-      { name: "عائشة محمود طه", status: "حاضر" },
-      { name: "يوسف إبراهيم أحمد", status: "حاضر" },
-      { name: "خديجة عبدالرحمن", status: "حاضر" },
-      { name: "عمر حسن محمد", status: "غائب" },
-      { name: "زينب سعد أحمد", status: "حاضر" }
-    ]
+    id: 1,
+    name: 'محمد أحمد',
+    age: 25,
+    level: 'متقدم',
+    course: 'تحفيظ القرآن',
+    progress: 85,
+    joinDate: '2024-01-15'
   },
   {
-    day: "الأسبوع الثاني", 
-    date: "2024-01-14",
-    students: [
-      { name: "أحمد محمد علي", status: "حاضر" },
-      { name: "فاطمة أحمد حسن", status: "غائب" },
-      { name: "محمد عبدالله سالم", status: "حاضر" },
-      { name: "عائشة محمود طه", status: "حاضر" },
-      { name: "يوسف إبراهيم أحمد", status: "حاضر" },
-      { name: "خديجة عبدالرحمن", status: "حاضر" },
-      { name: "عمر حسن محمد", status: "حاضر" },
-      { name: "زينب سعد أحمد", status: "حاضر" }
-    ]
+    id: 2,
+    name: 'فاطمة علي',
+    age: 22,
+    level: 'متوسط',
+    course: 'التجويد',
+    progress: 70,
+    joinDate: '2024-02-10'
   },
   {
-    day: "الأسبوع الثالث",
-    date: "2024-01-21", 
-    students: [
-      { name: "أحمد محمد علي", status: "حاضر" },
-      { name: "فاطمة أحمد حسن", status: "حاضر" },
-      { name: "محمد عبدالله سالم", status: "حاضر" },
-      { name: "عائشة محمود طه", status: "غائب" },
-      { name: "يوسف إبراهيم أحمد", status: "حاضر" },
-      { name: "خديجة عبدالرحمن", status: "حاضر" },
-      { name: "عمر حسن محمد", status: "حاضر" },
-      { name: "زينب سعد أحمد", status: "غائب" }
-    ]
+    id: 3,
+    name: 'عبد الله محمد',
+    age: 28,
+    level: 'مبتدئ',
+    course: 'تحفيظ القرآن',
+    progress: 45,
+    joinDate: '2024-03-05'
+  }
+];
+
+// بيانات الدورات
+export const courses = [
+  {
+    id: 1,
+    title: 'دورة تحفيظ القرآن الكريم',
+    description: 'دورة شاملة لتحفيظ القرآن الكريم مع التجويد',
+    instructor: 'الشيخ أحمد محمد',
+    duration: '6 أشهر',
+    level: 'جميع المستويات',
+    students: 45,
+    image: '/placeholder.svg'
+  },
+  {
+    id: 2,
+    title: 'دورة التجويد المتقدم',
+    description: 'تعلم أحكام التجويد والقراءة الصحيحة',
+    instructor: 'الأستاذ محمد علي',
+    duration: '3 أشهر',
+    level: 'متوسط ومتقدم',
+    students: 30,
+    image: '/placeholder.svg'
+  },
+  {
+    id: 3,
+    title: 'دورة الحديث الشريف',
+    description: 'دراسة الأحاديث النبوية الشريفة',
+    instructor: 'الشيخ عبد الرحمن أحمد',
+    duration: '4 أشهر',
+    level: 'متقدم',
+    students: 25,
+    image: '/placeholder.svg'
+  }
+];
+
+// بيانات الحضور
+export const attendanceData = [
+  {
+    id: 1,
+    studentName: 'محمد أحمد',
+    course: 'تحفيظ القرآن',
+    date: '2024-01-20',
+    status: 'حاضر',
+    notes: 'أداء ممتاز'
+  },
+  {
+    id: 2,
+    studentName: 'فاطمة علي',
+    course: 'التجويد',
+    date: '2024-01-20',
+    status: 'غائب',
+    notes: 'عذر مقبول'
+  },
+  {
+    id: 3,
+    studentName: 'عبد الله محمد',
+    course: 'تحفيظ القرآن',
+    date: '2024-01-20',
+    status: 'حاضر',
+    notes: 'يحتاج المراجعة'
+  }
+];
+
+// بيانات الأنشطة
+export const activities = [
+  {
+    id: 1,
+    title: 'مسابقة القرآن الكريم',
+    description: 'مسابقة سنوية لحفظة القرآن الكريم',
+    date: '2024-05-15',
+    type: 'مسابقة',
+    participants: 100
+  },
+  {
+    id: 2,
+    title: 'ورشة التجويد',
+    description: 'ورشة تدريبية لتعلم أحكام التجويد',
+    date: '2024-04-20',
+    type: 'ورشة',
+    participants: 50
+  },
+  {
+    id: 3,
+    title: 'محاضرة السيرة النبوية',
+    description: 'محاضرة عن سيرة النبي صلى الله عليه وسلم',
+    date: '2024-03-10',
+    type: 'محاضرة',
+    participants: 80
   }
 ];
