@@ -1,80 +1,64 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { Mail, Phone, MapPin, Facebook, Twitter, Instagram } from 'lucide-react';
 
-// مكون التذييل
+// تذييل الصفحة
 const Footer = () => {
   return (
-    <footer className="bg-emerald-900 text-white py-12">
-      <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* معلومات المسجد */}
+    <footer className="bg-islamic-primary text-white py-12">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          {/* معلومات الاتصال */}
           <div className="space-y-4">
-            <h3 className="text-xl font-bold font-cairo text-yellow-400">
-              مسجد خالد ابن الوليد
-            </h3>
-            <p className="text-emerald-200 font-cairo">
-              مركز متكامل لتعليم وتحفيظ القرآن الكريم
-            </p>
+            <h3 className="text-xl font-bold font-cairo text-islamic-gold">تواصل معنا</h3>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-3">
+                <Phone className="w-5 h-5 text-islamic-gold" />
+                <span className="font-cairo">+966 123 456 789</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <Mail className="w-5 h-5 text-islamic-gold" />
+                <span className="font-cairo">info@mosque-education.com</span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <MapPin className="w-5 h-5 text-islamic-gold" />
+                <span className="font-cairo">الرياض، المملكة العربية السعودية</span>
+              </div>
+            </div>
           </div>
 
           {/* روابط سريعة */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold font-cairo text-yellow-400">
-              روابط سريعة
-            </h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/courses" className="text-emerald-200 hover:text-yellow-400 transition-colors font-cairo">
-                  الدورات
-                </Link>
-              </li>
-              <li>
-                <Link to="/instructors" className="text-emerald-200 hover:text-yellow-400 transition-colors font-cairo">
-                  المدرسون
-                </Link>
-              </li>
-              <li>
-                <Link to="/activities" className="text-emerald-200 hover:text-yellow-400 transition-colors font-cairo">
-                  الأنشطة
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* معلومات التواصل */}
-          <div className="space-y-4">
-            <h4 className="text-lg font-semibold font-cairo text-yellow-400">
-              تواصل معنا
-            </h4>
-            <div className="space-y-2 text-emerald-200 font-cairo">
-              <p>📧 info@mosque.com</p>
-              <p>📱 +20 123 456 7890</p>
-              <p>📍 القاهرة، مصر</p>
+            <h3 className="text-xl font-bold font-cairo text-islamic-gold">روابط سريعة</h3>
+            <div className="space-y-2">
+              <a href="#" className="block hover:text-islamic-gold transition-colors font-cairo">الدورات التعليمية</a>
+              <a href="#" className="block hover:text-islamic-gold transition-colors font-cairo">برامج التحفيظ</a>
+              <a href="#" className="block hover:text-islamic-gold transition-colors font-cairo">الأنشطة</a>
+              <a href="#" className="block hover:text-islamic-gold transition-colors font-cairo">المدرسون</a>
             </div>
           </div>
 
-          {/* أوقات الصلاة */}
+          {/* وسائل التواصل الاجتماعي */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold font-cairo text-yellow-400">
-              أوقات الصلاة
-            </h4>
-            <div className="space-y-2 text-emerald-200 font-cairo text-sm">
-              <p>الفجر: 5:30</p>
-              <p>الظهر: 12:15</p>
-              <p>العصر: 3:45</p>
-              <p>المغرب: 6:20</p>
-              <p>العشاء: 7:45</p>
+            <h3 className="text-xl font-bold font-cairo text-islamic-gold">تابعنا</h3>
+            <div className="flex space-x-4">
+              <a href="#" className="bg-islamic-light hover:bg-islamic-gold transition-colors p-3 rounded-full">
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a href="#" className="bg-islamic-light hover:bg-islamic-gold transition-colors p-3 rounded-full">
+                <Twitter className="w-5 h-5" />
+              </a>
+              <a href="#" className="bg-islamic-light hover:bg-islamic-gold transition-colors p-3 rounded-full">
+                <Instagram className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>
 
-        {/* خط الفصل */}
-        <hr className="border-emerald-700 my-8" />
-
-        {/* حقوق الطبع */}
-        <div className="text-center text-emerald-200 font-cairo">
-          <p>© 2024 مسجد خالد ابن الوليد. جميع الحقوق محفوظة.</p>
+        <div className="border-t border-islamic-light mt-8 pt-8 text-center">
+          <p className="font-cairo text-islamic-cream">
+            © 2024 مسجد خالد ابن الوليد. جميع الحقوق محفوظة.
+          </p>
         </div>
       </div>
     </footer>

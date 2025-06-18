@@ -1,104 +1,89 @@
 
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { useState } from 'react';
 
-// مكون بطاقات المواضيع
+// بطاقات المواضيع الإسلامية
 const TopicsCards = () => {
+  const [hoveredCard, setHoveredCard] = useState(null);
+
   const topics = [
     {
-      title: "تحفيظ القرآن الكريم",
-      description: "برامج متخصصة لحفظ القرآن الكريم بطرق علمية حديثة",
-      icon: "📖",
-      link: "/tahfeez-course",
-      color: "from-emerald-600 to-emerald-800"
+      title: 'العقيدة',
+      description: 'دراسة أصول العقيدة الإسلامية والتوحيد',
+      image: 'https://images.unsplash.com/photo-1466442929976-97f336a657be?w=400&h=300&fit=crop'
     },
     {
-      title: "تعلم التجويد",
-      description: "دورات شاملة لتعلم أحكام التجويد وتحسين التلاوة",
-      icon: "🎵",
-      link: "/courses",
-      color: "from-blue-600 to-blue-800"
+      title: 'التفسير',
+      description: 'تفسير آيات القرآن الكريم وفهم معانيها',
+      image: 'https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=400&h=300&fit=crop'
     },
     {
-      title: "الدروس والمحاضرات",
-      description: "محاضرات دينية ودروس علمية في العلوم الشرعية",
-      icon: "🎓",
-      link: "/activities",
-      color: "from-purple-600 to-purple-800"
+      title: 'الفقه',
+      description: 'تعلم أحكام الشريعة الإسلامية والعبادات',
+      image: 'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=400&h=300&fit=crop'
     },
     {
-      title: "البرامج التفاعلية",
-      description: "أنشطة وبرامج تفاعلية لجميع الأعمار",
-      icon: "🤝",
-      link: "/activities", 
-      color: "from-orange-600 to-orange-800"
+      title: 'التجويد',
+      description: 'إتقان تلاوة القرآن الكريم بالأحكام الصحيحة',
+      image: 'https://images.unsplash.com/photo-1523712999610-f77fbcfc3843?w=400&h=300&fit=crop'
+    },
+    {
+      title: 'السيرة',
+      description: 'دراسة سيرة النبي محمد صلى الله عليه وسلم',
+      image: 'https://images.unsplash.com/photo-1470813740244-df37b8c1edcb?w=400&h=300&fit=crop'
     }
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6">
-        {/* العنوان الرئيسي */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-emerald-800 font-cairo mb-6">
-            برامجنا التعليمية
+    <section className="py-16 bg-islamic-cream">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-islamic-primary font-cairo mb-4">
+            المواضيع التعليمية
           </h2>
-          <p className="text-xl text-gray-600 font-cairo max-w-3xl mx-auto leading-relaxed">
-            نقدم مجموعة متنوعة من البرامج التعليمية والتربوية المصممة لخدمة جميع أفراد المجتمع
+          <p className="text-islamic-light font-cairo text-lg">
+            تعلم أساسيات الدين الإسلامي من خلال منهج شامل ومتكامل
           </p>
         </div>
 
-        {/* بطاقات المواضيع */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {topics.map((topic, index) => (
-            <Link key={index} to={topic.link} className="group">
-              <Card className="h-full transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border-0 overflow-hidden">
-                <div className={`h-2 bg-gradient-to-r ${topic.color}`}></div>
+            <div
+              key={index}
+              className="group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 cursor-pointer"
+              style={{
+                backgroundImage: `url(${topic.image})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                height: '300px'
+              }}
+              onMouseEnter={() => setHoveredCard(index)}
+              onMouseLeave={() => setHoveredCard(null)}
+            >
+              {/* طبقة التدرج */}
+              <div className="absolute inset-0 bg-gradient-to-t from-islamic-primary/90 via-islamic-primary/50 to-transparent"></div>
+              
+              {/* المحتوى */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                <h3 className="text-2xl font-bold font-cairo mb-2 text-islamic-gold">
+                  {topic.title}
+                </h3>
                 
-                <CardHeader className="text-center pb-4">
-                  <div className="text-6xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {topic.icon}
-                  </div>
-                  <CardTitle className="text-xl font-cairo text-emerald-800 group-hover:text-emerald-600 transition-colors">
-                    {topic.title}
-                  </CardTitle>
-                </CardHeader>
-
-                <CardContent className="text-center">
-                  <p className="text-gray-600 font-cairo leading-relaxed">
+                {/* الوصف يظهر عند التمرير */}
+                <div className={`transition-all duration-300 ${
+                  hoveredCard === index 
+                    ? 'opacity-100 transform translate-y-0' 
+                    : 'opacity-0 transform translate-y-4'
+                }`}>
+                  <p className="font-cairo text-sm leading-relaxed">
                     {topic.description}
                   </p>
-                  
-                  <div className="mt-6">
-                    <span className="inline-flex items-center text-emerald-600 font-cairo font-medium group-hover:text-emerald-800 transition-colors">
-                      اكتشف المزيد ←
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
+                </div>
+              </div>
 
-        {/* دعوة للعمل */}
-        <div className="text-center mt-16">
-          <Card className="max-w-2xl mx-auto bg-gradient-to-br from-emerald-800 to-emerald-600 text-white border-0">
-            <CardContent className="p-8">
-              <h3 className="text-3xl font-bold font-cairo mb-4">
-                ابدأ رحلتك التعليمية اليوم
-              </h3>
-              <p className="font-cairo text-lg mb-6 opacity-90">
-                انضم إلينا واكتشف عالم التعلم والتطوير الروحي
-              </p>
-              <Link 
-                to="/courses"
-                className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-cairo font-medium px-8 py-3 rounded-lg transition-colors"
-              >
-                استكشف الدورات
-              </Link>
-            </CardContent>
-          </Card>
+              {/* زخرفة إسلامية */}
+              <div className="absolute top-4 right-4 w-8 h-8 border-2 border-islamic-gold rounded-full opacity-70 group-hover:opacity-100 transition-opacity"></div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
