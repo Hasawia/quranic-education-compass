@@ -4,23 +4,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 
-// صفحة إنشاء حساب جديد
-const Signup = () => {
+// صفحة تسجيل الدخول
+const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    password: ''
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert('كلمات المرور غير متطابقة');
-      return;
-    }
-    console.log('Signup attempted with:', formData);
+    console.log('Login attempted with:', formData);
     navigate('/');
   };
 
@@ -47,31 +41,15 @@ const Signup = () => {
               <span className="text-2xl text-white">🕌</span>
             </div>
             <CardTitle className="text-2xl font-bold text-emerald-800 font-cairo">
-              إنشاء حساب جديد
+              تسجيل الدخول
             </CardTitle>
             <CardDescription className="font-cairo">
-              أدخل بياناتك لإنشاء حساب جديد
+              أدخل بياناتك للوصول إلى حسابك
             </CardDescription>
           </CardHeader>
 
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <label htmlFor="fullName" className="font-cairo text-emerald-800 block">
-                  الاسم الكامل
-                </label>
-                <input
-                  id="fullName"
-                  name="fullName"
-                  type="text"
-                  required
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-yellow-600 focus:ring-yellow-600 font-cairo"
-                  placeholder="أدخل اسمك الكامل"
-                />
-              </div>
-
               <div className="space-y-2">
                 <label htmlFor="email" className="font-cairo text-emerald-800 block">
                   البريد الإلكتروني
@@ -104,34 +82,18 @@ const Signup = () => {
                 />
               </div>
 
-              <div className="space-y-2">
-                <label htmlFor="confirmPassword" className="font-cairo text-emerald-800 block">
-                  تأكيد كلمة المرور
-                </label>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  required
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:border-yellow-600 focus:ring-yellow-600 font-cairo"
-                  placeholder="أعد إدخال كلمة المرور"
-                />
-              </div>
-
               <Button 
                 type="submit" 
                 className="w-full bg-yellow-600 hover:bg-yellow-700 text-white font-cairo font-medium"
               >
-                إنشاء الحساب
+                تسجيل الدخول
               </Button>
 
               <div className="text-center">
                 <p className="text-sm text-gray-600 font-cairo">
-                  لديك حساب بالفعل؟{' '}
-                  <Link to="/login" className="text-yellow-600 hover:underline font-medium">
-                    تسجيل الدخول
+                  ليس لديك حساب؟{' '}
+                  <Link to="/signup" className="text-yellow-600 hover:underline font-medium">
+                    إنشاء حساب جديد
                   </Link>
                 </p>
               </div>
@@ -143,4 +105,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;
