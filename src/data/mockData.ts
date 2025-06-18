@@ -64,3 +64,54 @@ export const students = [
     ]
   }
 ];
+
+export const mockAttendanceData = [
+  {
+    day: 'السبت',
+    date: '2024-01-20',
+    students: [
+      { name: 'محمد أحمد', status: 'حاضر' },
+      { name: 'علي محمود', status: 'حاضر' },
+      { name: 'عبد الله سالم', status: 'غائب' },
+      { name: 'حمزة خالد', status: 'حاضر' },
+      { name: 'يوسف إبراهيم', status: 'حاضر' },
+      { name: 'عمر حسين', status: 'غائب' }
+    ]
+  },
+  {
+    day: 'الثلاثاء',
+    date: '2024-01-23',
+    students: [
+      { name: 'محمد أحمد', status: 'حاضر' },
+      { name: 'علي محمود', status: 'غائب' },
+      { name: 'عبد الله سالم', status: 'حاضر' },
+      { name: 'حمزة خالد', status: 'حاضر' },
+      { name: 'يوسف إبراهيم', status: 'حاضر' },
+      { name: 'عمر حسين', status: 'حاضر' }
+    ]
+  },
+  {
+    day: 'السبت',
+    date: '2024-01-27',
+    students: [
+      { name: 'محمد أحمد', status: 'حاضر' },
+      { name: 'علي محمود', status: 'حاضر' },
+      { name: 'عبد الله سالم', status: 'حاضر' },
+      { name: 'حمزة خالد', status: 'غائب' },
+      { name: 'يوسف إبراهيم', status: 'حاضر' },
+      { name: 'عمر حسين', status: 'حاضر' }
+    ]
+  },
+  {
+    day: 'الثلاثاء',
+    date: '2024-01-30',
+    students: [
+      { name: 'محمد أحمد', status: 'غائب' },
+      { name: 'علي محمود', status: 'حاضر' },
+      { name: 'عبد الله سالم', status: 'حاضر' },
+      { name: 'حمزة خالد', status: 'حاضر' },
+      { name: 'يوسف إبراهيم', status: 'غائب' },
+      { name: 'عمر حسين', status: 'حاضر' }
+    ]
+  }
+];
